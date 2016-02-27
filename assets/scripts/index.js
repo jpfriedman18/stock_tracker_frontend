@@ -11,6 +11,11 @@ const myApp = {
   BASE_URL: 'http://localhost:3000'
 };
 
+let displayStockPurchases = function(stock_purchases){
+  let stockPurchaseListingTemplate = require('./stock-purchase-listing.handlebars');
+  $('.stocks').html(stockPurchaseListingTemplate({stock_purchases}));
+};
+
 //Account AJAX requests
 $(document).ready(() => {
   $('.alert').hide();
@@ -109,11 +114,19 @@ $(document).ready(() => {
     $.ajax({
       url: myApp.BASE_URL + '/stock_purchases',
       method: 'GET',
+      dataType: 'json',
       headers: {
         Authorization: 'Token token=' + myApp.user.token,
       },
     }).done(function(data) {
       console.log(data.stock_purchases);
+      displayStockPurchases(data.stock_purchases);
+      // $('.stocks').append(data.stock_purchases[0].purchase_price);
+      // data.stock_purchases.forEach(function(element){
+      //   let name = element.name;
+      //   let purchase_price = element.purchase_price;
+      //   $('.stocks').append("<p>Name: " + name + " Purchase Price: " + purchase_price + "</p>");
+      // });
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
