@@ -126,6 +126,41 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary show-stocks signed-in">Stocks</button>
+      <!-- Create Stock Modal -->
+      <div class="modal fade create-stock-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="create-stock-label">Add a Stock to Your Portfolio</h4>
+            </div>
+            <div class="modal-body">
+              <form id='create-stock'>
+                <fieldset class="form-group">
+                  <label for="stock_purchase[ticker]">Ticker Symbol</label>
+                  <input name="stock_purchase[ticker]" type="text" class="form-control" placeholder="Ticker">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="stock_purchase[name]">Company Name</label>
+                  <input name="stock_purchase[name]" type="text" class="form-control" placeholder="Company Name">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="stock_purchase[purchase_price]">Purchase Price</label>
+                  <input name="stock_purchase[purchase_price]" type="text" class="form-control" placeholder="Purchase Price">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="stock_purchase[shares_purchased]">Shares Purchased</label>
+                  <input name="stock_purchase[shares_purchased]" type="text" class="form-control" placeholder="Shares Purchased">
+                </fieldset>
+                <input type="submit" name="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary show-stocks signed-in">Show Stocks</button>
+      <button type="button" class="btn btn-primary signed-in" data-toggle="modal" data-target=".create-stock-modal">Add Stock</button>
     </body>
 </html>

@@ -103,6 +103,7 @@ $(document).ready(() => {
     });
   });
 
+  //Index stocks for current_user in console
   $('.show-stocks').on('click', function(e) {
     e.preventDefault();
     $.ajax({
@@ -113,13 +114,32 @@ $(document).ready(() => {
       },
     }).done(function(data) {
       console.log(data.stock_purchases);
-      console.log(data.stock_purchases[0].purchase_price);
+    }).fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  //Create new stock associated with current_user
+  $('#create-stock').on('submit', function(e) {
+    e.preventDefault();
+    let formData = new FormData(e.target);
+    $.ajax({
+      url: myApp.BASE_URL + '/stock_purchases',
+      method: 'POST',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function(data) {
+      console.log(data.stock_purchases);
+      $('.create-stock-modal').modal('hide');
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
   });
 });
-
 
 //GET data for a given stock symbol
 // $(document).ready(function() {
