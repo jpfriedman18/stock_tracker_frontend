@@ -103,7 +103,21 @@ $(document).ready(() => {
     });
   });
 
-  
+  $('.show-stocks').on('click', function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: myApp.BASE_URL + '/stock_purchases',
+      method: 'GET',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+    }).done(function(data) {
+      console.log(data.stock_purchases);
+      console.log(data.stock_purchases[0].purchase_price);
+    }).fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  });
 });
 
 
