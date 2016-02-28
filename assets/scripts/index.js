@@ -106,23 +106,25 @@ $(document).ready(() => {
 
 //---------------------------Stock Functions--------------------------------
   //AJAX request to get current price of one stock
-  let getCurrentPrice = function(stock){
-    $.ajax({
-      data: { symbol: stock.ticker },
-      url: 'http://dev.markitondemand.com/Api/v2/Quote/jsonp',
-      dataType: "jsonp",
-          }).done(function(data) {
-            stock.current_price = data.LastPrice;
-          }).fail(function(jqxhr) {
-            console.error(jqxhr);
+  let getCurrentPrice = function(stock_purchases){
+    stock_purchases.forEach(function(stock){
+      $.ajax({
+        data: { symbol: stock.ticker },
+        url: 'http://dev.markitondemand.com/Api/v2/Quote/jsonp',
+        dataType: "jsonp",
+            }).done(function(data) {
+              stock.current_price = data.LastPrice;
+            }).fail(function(jqxhr) {
+              console.error(jqxhr);
+        });
       });
-    return stock;
+    return stock_purchases;
   };
 
   //Map array of stock_purchases from back-end to new array of same stock_purchases
   //with current price from Markit API added
   let addCurrentPrice = function(stock_purchases){
-    return stock_purchases.map(getCurrentPrice);
+    return getCurrentPrice(stock_purchases);
   };
 
   //Invoke handlebars template to populate stocks table
@@ -142,8 +144,8 @@ $(document).ready(() => {
         Authorization: 'Token token=' + myApp.user.token,
       },
     }).done(function(data) {
-      console.log(data.stock_purchases);
       displayStockPurchases(addCurrentPrice(data.stock_purchases));
+      console.log(data.stock_purchases);
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
