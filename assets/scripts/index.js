@@ -11,11 +11,6 @@ const myApp = {
   BASE_URL: 'http://localhost:3000'
 };
 
-let displayStockPurchases = function(stock_purchases){
-  let stockPurchaseListingTemplate = require('./stock-purchase-listing.handlebars');
-  $('.stocks').html(stockPurchaseListingTemplate({stock_purchases}));
-};
-
 //Account AJAX requests
 $(document).ready(() => {
   $('.alert').hide();
@@ -103,12 +98,40 @@ $(document).ready(() => {
       console.log("Logged Out!");
       $('.signed-out').show();
       $('.signed-in').hide();
+      $('.stocks').empty();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
   });
 
-  //Index stocks for current_user in console
+//---------------------------Stock Functions--------------------------------
+  //AJAX request to get current price of one stock
+  let getCurrentPrice = function(stock){
+    $.ajax({
+      data: { symbol: stock.ticker },
+      url: 'http://dev.markitondemand.com/Api/v2/Quote/jsonp',
+      dataType: "jsonp",
+          }).done(function(data) {
+            stock.current_price = data.LastPrice;
+          }).fail(function(jqxhr) {
+            console.error(jqxhr);
+      });
+    return stock;
+  };
+
+  //Map array of stock_purchases from back-end to new array of same stock_purchases
+  //with current price from Markit API added
+  let addCurrentPrice = function(stock_purchases){
+    return stock_purchases.map(getCurrentPrice);
+  };
+
+  //Invoke handlebars template to populate stocks table
+  let displayStockPurchases = function(stock_purchases){
+    let stockPurchaseListingTemplate = require('./stock-purchase-listing.handlebars');
+    $('.stocks').html(stockPurchaseListingTemplate({stock_purchases}));
+  };
+
+  //GET all stock_purchases associated with current_user and populate table with them
   $('.show-stocks').on('click', function(e) {
     e.preventDefault();
     $.ajax({
@@ -120,13 +143,7 @@ $(document).ready(() => {
       },
     }).done(function(data) {
       console.log(data.stock_purchases);
-      displayStockPurchases(data.stock_purchases);
-      // $('.stocks').append(data.stock_purchases[0].purchase_price);
-      // data.stock_purchases.forEach(function(element){
-      //   let name = element.name;
-      //   let purchase_price = element.purchase_price;
-      //   $('.stocks').append("<p>Name: " + name + " Purchase Price: " + purchase_price + "</p>");
-      // });
+      displayStockPurchases(addCurrentPrice(data.stock_purchases));
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -153,16 +170,3 @@ $(document).ready(() => {
     });
   });
 });
-
-//GET data for a given stock symbol
-// $(document).ready(function() {
-// $.ajax({
-//   data: { symbol: 'AAPL' },
-//   url: 'http://dev.markitondemand.com/Api/v2/Quote/jsonp',
-//   dataType: "jsonp",
-//       }).done(function(data) {
-//         console.log(data);
-//       }).fail(function(jqxhr) {
-//         console.error(jqxhr);
-//   });
-// });
