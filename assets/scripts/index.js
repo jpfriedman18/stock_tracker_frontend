@@ -50,6 +50,7 @@ $(document).ready(() => {
       console.log(data);
       myApp.user = data.user;
       console.log(myApp.user);
+      showStocks();
       $('.signed-out').hide();
       $('.signed-in').show();
       $('#sign-in-modal').modal('hide');
@@ -112,9 +113,7 @@ $(document).ready(() => {
     $('.stocks').html(stockPurchaseListingTemplate({stock_purchases}));
   };
 
-  //GET all stock_purchases associated with current_user and populate table with them
-  $('.show-stocks').on('click', function(e) {
-    e.preventDefault();
+  let showStocks = function(){
     $.ajax({
       url: myApp.BASE_URL + '/stock_purchases',
       method: 'GET',
@@ -129,6 +128,12 @@ $(document).ready(() => {
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
+  };
+
+  //GET all stock_purchases associated with current_user and populate table with them
+  $('.show-stocks').on('click', function(e) {
+    e.preventDefault();
+    showStocks();
   });
 
   //Create new stock associated with current_user
@@ -146,10 +151,15 @@ $(document).ready(() => {
       data: formData,
     }).done(function(data) {
       console.log(data.stock_purchases);
+      showStocks();
       $('.create-stock-modal').modal('hide');
     }).fail(function(jqxhr) {
-      alert("Invalid Ticker Symbol!")
+      alert("Invalid Ticker Symbol!");
       console.error(jqxhr);
     });
   });
+
+  // $('.delete-stock').on('click', function(e){
+  //   id = $(e.target).attr("stock-id");
+  // });
 });
