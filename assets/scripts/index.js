@@ -13,7 +13,6 @@ const myApp = {
 
 //Account AJAX requests
 $(document).ready(() => {
-  $('.alert').hide();
   $('.signed-out').show();
   $('.signed-in').hide();
   //Create new user
@@ -159,7 +158,19 @@ $(document).ready(() => {
     });
   });
 
-  // $('.delete-stock').on('click', function(e){
-  //   id = $(e.target).attr("stock-id");
-  // });
+  $('.stocks').on('click', '.delete-stock', function(e){
+    e.preventDefault();
+    $.ajax({
+      url: myApp.BASE_URL + '/stock_purchases/' + $(e.target).attr("data-stock-id"),
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+    }).done(function() {
+      showStocks();
+      console.log("Deleted!");
+    }).fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  });
 });
