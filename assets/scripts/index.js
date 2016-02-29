@@ -158,6 +158,8 @@ $(document).ready(() => {
     });
   });
 
+  // $('.stocks').on('click', '.update-stock', function(e));
+
   $('.stocks').on('click', '.delete-stock', function(e){
     e.preventDefault();
     $.ajax({
