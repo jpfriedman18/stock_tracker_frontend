@@ -112,6 +112,8 @@ $(document).ready(() => {
     $('.stocks').html(stockPurchaseListingTemplate({stock_purchases}));
   };
 
+  //Load all stocks associated with user from database, display them, and
+  //generate pie chart using their values
   let showStocks = function(){
     $.ajax({
       url: myApp.BASE_URL + '/stock_purchases',
@@ -124,6 +126,7 @@ $(document).ready(() => {
       myApp.stockPurchases = data.stock_purchases;
       calculatePortfolioGainLoss();
       displayStockPurchases(myApp.stockPurchases);
+      loadPieChart();
       console.log(myApp.stockPurchases);
     }).fail(function(jqxhr) {
       console.error(jqxhr);
@@ -205,13 +208,46 @@ $(document).ready(() => {
     });
   });
 
+  //Calculate difference between purchase value and current value for each
+  //purchase in the portfolio
   let calculatePortfolioGainLoss = function(){
     myApp.stockPurchases.forEach(calculateIndividualGainLoss);
   };
 
   let calculateIndividualGainLoss = function(stock){
-    let purchaseValue = stock.purchase_price * stock.shares_purchased;
-    let currentValue = stock.current_price * stock.shares_purchased;
-    stock.gainLoss = currentValue - purchaseValue;
+    stock.purchaseValue = stock.purchase_price * stock.shares_purchased;
+    stock.currentValue = stock.current_price * stock.shares_purchased;
+    stock.gainLoss = stock.currentValue - stock.purchaseValue;
+  };
+
+  //required for chart to work
+  google.charts.load('current', {packages: ['corechart']});
+
+  //Generates pie chart with breakdown of all holdings in portfolio
+  let loadPieChart = function(){
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      let arr = myApp.stockPurchases;
+      let stocksArray = [];
+      arr.forEach(function(stock){
+        stocksArray.push([stock.name, stock.currentValue]);
+      });
+      let data = new google.visualization.DataTable();
+      data.addColumn('string', 'Company');
+      data.addColumn('number', 'Current Value');
+      data.addRows(stocksArray);
+
+      let options = {
+        title: 'Your Portfolio Breakdown',
+        pieHole: 0.4,
+        'width':600,
+        'height':400
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+      chart.draw(data, options);
+    }
   };
 });

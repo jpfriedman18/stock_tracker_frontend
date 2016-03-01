@@ -8,6 +8,8 @@
 
       <link rel='shortcut icon' href='assets/images/favicon.ico' type='image/x-icon'/>
       <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
     <body class="container-fluid">
 
@@ -185,8 +187,11 @@
 
       <button type="button" class="btn btn-primary show-stocks signed-in">Refresh</button>
       <button type="button" class="btn btn-primary signed-in" data-toggle="modal" data-target=".create-stock-modal">Add Stock</button>
+      <button type="button" class="btn btn-primary make-chart signed-in">Chart</button>
 
       <table class="stocks">
       </table>
+
+      <div id="piechart"></div>
     </body>
 </html>
