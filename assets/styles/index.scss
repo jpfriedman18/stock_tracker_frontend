@@ -12,6 +12,8 @@ td { height: 30px;
 tr:nth-child(even) {background: #ccc;}
 tr:nth-child(odd) {background: #fff;}
 
+.table-top-row { font-weight: bold;}
+
 btn-primary {
   margin-bottom: 10px;
 }
