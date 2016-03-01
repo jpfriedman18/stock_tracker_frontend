@@ -121,9 +121,10 @@ $(document).ready(() => {
         Authorization: 'Token token=' + myApp.user.token,
       },
     }).done(function(data) {
-      myApp.stock_purchases = data.stock_purchases;
-      displayStockPurchases(myApp.stock_purchases);
-      console.log(myApp.stock_purchases);
+      myApp.stockPurchases = data.stock_purchases;
+      calculatePortfolioGainLoss();
+      displayStockPurchases(myApp.stockPurchases);
+      console.log(myApp.stockPurchases);
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -164,6 +165,7 @@ $(document).ready(() => {
     $(".update-stock-btn").attr("data-stock-id", id);
   });
 
+  //Update the stock on the back-end
   $('#update-stock').on('submit', function(e){
     e.preventDefault();
     let id = $('.update-stock-btn').attr('data-stock-id');
@@ -202,4 +204,14 @@ $(document).ready(() => {
       console.error(jqxhr);
     });
   });
+
+  let calculatePortfolioGainLoss = function(){
+    myApp.stockPurchases.forEach(calculateIndividualGainLoss);
+  };
+
+  let calculateIndividualGainLoss = function(stock){
+    let purchaseValue = stock.purchase_price * stock.shares_purchased;
+    let currentValue = stock.current_price * stock.shares_purchased;
+    stock.gainLoss = currentValue - purchaseValue;
+  };
 });
