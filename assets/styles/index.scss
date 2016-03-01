@@ -11,6 +11,9 @@ td { height: 30px;
   padding-top: 10px;
   padding-bottom: 10px;}
 
+tr:nth-child(even) {background: #ccc;}
+tr:nth-child(odd) {background: #fff;}
+
 btn-primary {
   margin-bottom: 10px;
 }

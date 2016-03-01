@@ -153,7 +153,7 @@ $(document).ready(() => {
       showStocks();
       $('.create-stock-modal').modal('hide');
     }).fail(function(jqxhr) {
-      alert("Invalid Ticker Symbol!");
+      alert("Invalid Entry, Idiot!");
       console.error(jqxhr);
     });
   });
