@@ -158,8 +158,35 @@ $(document).ready(() => {
     });
   });
 
-  // $('.stocks').on('click', '.update-stock', function(e));
+  //Add id of stock to submit button in update-stock-modal
+  $('.stocks').on('click', '.update-stock', function(e){
+    let id = $(e.target).attr("data-stock-id");
+    $(".update-stock-btn").attr("data-stock-id", id);
+  });
 
+  $('#update-stock').on('submit', function(e){
+    e.preventDefault();
+    let id = $('.update-stock-btn').attr('data-stock-id');
+    let formData = new FormData(e.target);
+    $.ajax({
+      url: myApp.BASE_URL + '/stock_purchases/' + id,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function() {
+      showStocks();
+      $('.update-stock-modal').modal('hide');
+    }).fail(function(jqxhr) {
+      alert("Invalid Update!");
+      console.error(jqxhr);
+    });
+  });
+
+  //Delete the stock on back-end, and reload list of stocks
   $('.stocks').on('click', '.delete-stock', function(e){
     e.preventDefault();
     $.ajax({
