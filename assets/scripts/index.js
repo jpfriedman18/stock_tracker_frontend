@@ -125,6 +125,7 @@ $(document).ready(() => {
     }).done(function(data) {
       myApp.stockPurchases = data.stock_purchases;
       calculatePortfolioGainLoss();
+      myApp.stockPurchases.forEach(normalizeDollars);
       displayStockPurchases(myApp.stockPurchases);
       loadPieChart();
       console.log(myApp.stockPurchases);
@@ -220,6 +221,12 @@ $(document).ready(() => {
     stock.gainLoss = stock.currentValue - stock.purchaseValue;
   };
 
+  let normalizeDollars = function(stock){
+    stock.purchase_price = stock.purchase_price.toFixed(2);
+    stock.current_price = stock.current_price.toFixed(2);
+    stock.gainLoss = stock.gainLoss.toFixed(2);
+  };
+
   //required for chart to work
   google.charts.load('current', {packages: ['corechart']});
 
@@ -241,8 +248,8 @@ $(document).ready(() => {
       let options = {
         title: 'Your Portfolio Breakdown',
         pieHole: 0.4,
-        'width':600,
-        'height':400
+        'width':800,
+        'height':600
       };
 
       var chart = new google.visualization.PieChart(document.getElementById('piechart'));

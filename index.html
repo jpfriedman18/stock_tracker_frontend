@@ -184,14 +184,28 @@
         </div>
       </div>
 
+      <!--Portfolio Chart Modal-->
+      <div class="modal fade" id="portfolio-chart-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div id="piechart"></div>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42"></script>
+
+
+      <button type="button" class="btn btn-success signed-in" data-toggle="modal" data-target=".create-stock-modal">Add Stock</button>
       <button type="button" class="btn btn-primary show-stocks signed-in">Refresh</button>
-      <button type="button" class="btn btn-primary signed-in" data-toggle="modal" data-target=".create-stock-modal">Add Stock</button>
-      <button type="button" class="btn btn-primary make-chart signed-in">Chart</button>
+      <button type="button" class="btn btn-warning signed-in" data-toggle="modal" data-target="#portfolio-chart-modal">Portfolio Chart</button>
+
 
       <table class="stocks">
       </table>
 
-      <div id="piechart"></div>
     </body>
 </html>
