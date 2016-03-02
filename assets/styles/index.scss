@@ -9,7 +9,7 @@ td { height: 30px;
   padding-top: 10px;
   padding-bottom: 10px;}
 
-tr:nth-child(even) {background: #ccc;}
+tr:nth-child(even) {background: rgba(135, 206, 250, .5);}
 tr:nth-child(odd) {background: #fff;}
 
 .table-top-row { font-weight: bold;}
