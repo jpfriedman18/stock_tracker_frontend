@@ -15,6 +15,7 @@ const myApp = {
 $(document).ready(() => {
   $('.signed-out').show();
   $('.signed-in').hide();
+
   //Create new user
   $('#sign-up').on('submit', function(e) {
     e.preventDefault();
@@ -112,6 +113,13 @@ $(document).ready(() => {
     $('.stocks').html(stockPurchaseListingTemplate({stock_purchases}));
   };
 
+  let createCollapseAlert = function(){
+    $('.collapse').collapse('show');
+    setTimeout(function() {
+      $('.collapse').collapse('hide');
+    }, 2000);
+  };
+
   //Load all stocks associated with user from database, display them, and
   //generate pie chart using their values
   let showStocks = function(){
@@ -158,7 +166,7 @@ $(document).ready(() => {
       showStocks();
       $('.create-stock-modal').modal('hide');
     }).fail(function(jqxhr) {
-      alert("Invalid Entry, Idiot!");
+      createCollapseAlert();
       console.error(jqxhr);
     });
   });
@@ -187,7 +195,7 @@ $(document).ready(() => {
       showStocks();
       $('.update-stock-modal').modal('hide');
     }).fail(function(jqxhr) {
-      alert("Invalid Update!");
+      createCollapseAlert();
       console.error(jqxhr);
     });
   });

@@ -153,6 +153,7 @@
                 <input type="submit" name="submit" class="btn btn-primary">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </form>
+              <div class="collapse" id="collapse">INVALID ENTRY!</div>
             </div>
           </div>
         </div>
@@ -178,6 +179,7 @@
                 </fieldset>
                 <input type="submit" name="submit" class="btn btn-primary update-stock-btn">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div class="collapse" id="collapse">INVALID ENTRY!</div>
               </form>
             </div>
           </div>
@@ -198,14 +200,14 @@
 
       <script src="http://widgets.macroaxis.com/widgets/url.jsp?t=42"></script>
 
-
       <button type="button" class="btn btn-success signed-in" data-toggle="modal" data-target=".create-stock-modal">Add Stock</button>
-      <button type="button" class="btn btn-primary show-stocks signed-in">Refresh</button>
       <button type="button" class="btn btn-warning signed-in" data-toggle="modal" data-target="#portfolio-chart-modal">Portfolio Chart</button>
 
 
       <table class="stocks">
       </table>
+
+      <button type="button" class="btn btn-secondary show-stocks signed-in">Refresh</button>
 
     </body>
 </html>
