@@ -34,7 +34,7 @@ webpackJsonp([0],[
 	__webpack_require__(4);
 
 	var myApp = {
-	  BASE_URL: 'http://lit-meadow-39570.herokuapp.com'
+	  BASE_URL: "https://lit-meadow-39570.herokuapp.com/"
 	};
 
 	//Account AJAX requests

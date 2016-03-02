@@ -8,7 +8,7 @@ require('./example');
 require('../styles/index.scss');
 
 const myApp = {
-  BASE_URL: 'https://lit-meadow-39570.herokuapp.com'
+  BASE_URL: "https://lit-meadow-39570.herokuapp.com/"
 };
 
 //Account AJAX requests
